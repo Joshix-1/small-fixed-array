@@ -135,7 +135,7 @@ impl NonZero<u32> for NonZeroU32 {
 ///
 /// [`FixedArray`]: `crate::array::FixedArray`
 pub trait ValidLength:
-    sealed::LengthSealed + Copy + Display + PartialEq + From<u8> + TryFrom<usize> + Into<u32>
+    sealed::LengthSealed + Copy + Display + PartialEq + From<u8> + TryFrom<usize, Error: Debug> + Into<u32>
 {
     const ZERO: Self;
     const MAX: Self;

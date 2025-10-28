@@ -31,8 +31,10 @@ mod length;
 mod r#static;
 mod string;
 mod truncating_into;
+mod string_builder;
 
 pub use array::FixedArray;
 pub use length::ValidLength;
 pub use string::FixedString;
 pub use truncating_into::TruncatingInto;
+pub use string_builder::TryToFixedString;

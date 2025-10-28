@@ -59,12 +59,22 @@ pub(crate) struct InlineString<StrRepr: Copy + AsRef<[u8]> + AsMut<[u8]> + Defau
 impl<StrRepr: Copy + AsRef<[u8]> + AsMut<[u8]> + Default + TypeSize> InlineString<StrRepr> {
     const TERMINATOR: u8 = 0xFF;
 
-    fn max_len() -> usize {
+    pub fn empty() -> Self {
+        let mut arr = StrRepr::default();
+
+        if !arr.as_ref().is_empty() {
+            arr.as_mut()[0] = Self::TERMINATOR;
+        }
+
+        Self { arr }
+    }
+
+    pub fn max_len() -> usize {
         StrRepr::default().as_ref().len()
     }
 
     #[inline]
-    fn from_len_and_write(len: usize, write: impl FnOnce(&mut [u8])) -> Option<Self> {
+    pub fn from_len_and_write(len: usize, write: impl FnOnce(&mut [u8])) -> Option<Self> {
         let mut arr = StrRepr::default();
         if len > size_of::<Self>() {
             return None;
